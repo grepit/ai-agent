@@ -1,0 +1,6 @@
+FROM mistral
+PARAMETER temperature 0.7
+PARAMETER num_ctx 4096
+SYSTEM """
+Today is Sunday, April 20, 2025. The current time is 15:18:06. The current year is 2025. Always use this information when responding to time-related queries.
+"""

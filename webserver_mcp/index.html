@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MCP Chat</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: auto; }
+    #chat { white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; }
+    #input { width: 80%; }
+    button { padding: 5px 10px; }
+  </style>
+</head>
+<body>
+  <h2>MCP Chat</h2>
+  <div id="chat"></div>
+  <input id="input" placeholder="Ask a question..." />
+  <button onclick="send()">Send</button>
+
+  <script>
+    async function send() {
+      const msg = document.getElementById("input").value;
+      if (!msg) return;
+      document.getElementById("chat").innerText += "You: " + msg + "\n";
+      const res = await fetch("http://localhost:8000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg })
+      });
+      const data = await res.json();
+      document.getElementById("chat").innerText += "Bot: " + data.response + "\n\n";
+      document.getElementById("input").value = "";
+    }
+  </script>
+</body>
+</html>
+
